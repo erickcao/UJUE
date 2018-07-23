@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujuit.udata.dao.TerminateBeanMapper">
+	<resultMap id="BaseResultMap" type="com.ujuit.udata.bean.TerminateBean">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="exchange_basicinfo_id" property="exchangeBasicinfoId"
+			jdbcType="INTEGER" />
+		<result column="stock_category_id" property="stockCategoryId"
+			jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, code, exchange_basicinfo_id, stock_category_id,
+		create_time
+	</sql>
+
+
+	<select id="selectAllStockA" resultMap="BaseResultMap">
+		select  <include refid="Base_Column_List" /> from t_stock_basicinfo where exchange_basicinfo_id !=3
+	</select>
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_stock_basicinfo
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_stock_basicinfo
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.ujuit.udata.bean.TerminateBean">
+		insert into t_stock_basicinfo
+		(id, code, exchange_basicinfo_id,
+		stock_category_id, create_time)
+		values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR},
+		#{exchangeBasicinfoId,jdbcType=INTEGER},
+		#{stockCategoryId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.ujuit.udata.bean.TerminateBean">
+		insert into t_stock_basicinfo
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="exchangeBasicinfoId != null">
+				exchange_basicinfo_id,
+			</if>
+			<if test="stockCategoryId != null">
+				stock_category_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="exchangeBasicinfoId != null">
+				#{exchangeBasicinfoId,jdbcType=INTEGER},
+			</if>
+			<if test="stockCategoryId != null">
+				#{stockCategoryId,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ujuit.udata.bean.TerminateBean">
+		update t_stock_basicinfo
+		<set>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="exchangeBasicinfoId != null">
+				exchange_basicinfo_id =
+				#{exchangeBasicinfoId,jdbcType=INTEGER},
+			</if>
+			<if test="stockCategoryId != null">
+				stock_category_id = #{stockCategoryId,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ujuit.udata.bean.TerminateBean">
+		update
+		t_stock_basicinfo
+		set code = #{code,jdbcType=VARCHAR},
+		exchange_basicinfo_id = #{exchangeBasicinfoId,jdbcType=INTEGER},
+		stock_category_id = #{stockCategoryId,jdbcType=INTEGER},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

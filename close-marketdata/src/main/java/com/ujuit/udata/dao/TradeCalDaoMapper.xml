@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujuit.udata.dao.TradeCalDaoMapper">
+	<resultMap id="BaseResultMap" type="com.ujuit.udata.bean.TradeCalDao">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="exchangecd" property="exchangecd" jdbcType="VARCHAR" />
+		<result column="calendardate" property="calendardate" jdbcType="DATE" />
+		<result column="isopen" property="isopen" jdbcType="BIT" />
+		<result column="prevtradedate" property="prevtradedate"
+			jdbcType="DATE" />
+		<result column="isweekend" property="isweekend" jdbcType="BIT" />
+		<result column="ismonthend" property="ismonthend" jdbcType="BIT" />
+		<result column="isquarterend" property="isquarterend" jdbcType="BIT" />
+		<result column="isyearend" property="isyearend" jdbcType="BIT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, exchangecd, calendardate, isopen, prevtradedate,
+		isweekend,
+		ismonthend, isquarterend,
+		isyearend
+	</sql>
+
+
+	<select id="selectAllTradeDay" resultType="java.lang.String"
+		parameterType="java.lang.Integer">
+		select calendardate from trade_cal where isopen  = 1 and   calendardate&gt;='2009-12-01' and calendardate &lt;='2018-04-09' and exchangecd ='XSHG' order by calendardate asc;
+	</select>
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from trade_cal
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		trade_cal
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.ujuit.udata.bean.TradeCalDao">
+		insert into trade_cal (id,
+		exchangecd, calendardate,
+		isopen, prevtradedate, isweekend,
+		ismonthend,
+		isquarterend, isyearend
+		)
+		values (#{id,jdbcType=INTEGER},
+		#{exchangecd,jdbcType=VARCHAR},
+		#{calendardate,jdbcType=DATE},
+		#{isopen,jdbcType=BIT}, #{prevtradedate,jdbcType=DATE},
+		#{isweekend,jdbcType=BIT},
+		#{ismonthend,jdbcType=BIT},
+		#{isquarterend,jdbcType=BIT},
+		#{isyearend,jdbcType=BIT}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.ujuit.udata.bean.TradeCalDao">
+		insert into trade_cal
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="exchangecd != null">
+				exchangecd,
+			</if>
+			<if test="calendardate != null">
+				calendardate,
+			</if>
+			<if test="isopen != null">
+				isopen,
+			</if>
+			<if test="prevtradedate != null">
+				prevtradedate,
+			</if>
+			<if test="isweekend != null">
+				isweekend,
+			</if>
+			<if test="ismonthend != null">
+				ismonthend,
+			</if>
+			<if test="isquarterend != null">
+				isquarterend,
+			</if>
+			<if test="isyearend != null">
+				isyearend,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="exchangecd != null">
+				#{exchangecd,jdbcType=VARCHAR},
+			</if>
+			<if test="calendardate != null">
+				#{calendardate,jdbcType=DATE},
+			</if>
+			<if test="isopen != null">
+				#{isopen,jdbcType=BIT},
+			</if>
+			<if test="prevtradedate != null">
+				#{prevtradedate,jdbcType=DATE},
+			</if>
+			<if test="isweekend != null">
+				#{isweekend,jdbcType=BIT},
+			</if>
+			<if test="ismonthend != null">
+				#{ismonthend,jdbcType=BIT},
+			</if>
+			<if test="isquarterend != null">
+				#{isquarterend,jdbcType=BIT},
+			</if>
+			<if test="isyearend != null">
+				#{isyearend,jdbcType=BIT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ujuit.udata.bean.TradeCalDao">
+		update trade_cal
+		<set>
+			<if test="exchangecd != null">
+				exchangecd = #{exchangecd,jdbcType=VARCHAR},
+			</if>
+			<if test="calendardate != null">
+				calendardate = #{calendardate,jdbcType=DATE},
+			</if>
+			<if test="isopen != null">
+				isopen = #{isopen,jdbcType=BIT},
+			</if>
+			<if test="prevtradedate != null">
+				prevtradedate = #{prevtradedate,jdbcType=DATE},
+			</if>
+			<if test="isweekend != null">
+				isweekend = #{isweekend,jdbcType=BIT},
+			</if>
+			<if test="ismonthend != null">
+				ismonthend = #{ismonthend,jdbcType=BIT},
+			</if>
+			<if test="isquarterend != null">
+				isquarterend = #{isquarterend,jdbcType=BIT},
+			</if>
+			<if test="isyearend != null">
+				isyearend = #{isyearend,jdbcType=BIT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ujuit.udata.bean.TradeCalDao">
+		update trade_cal
+		set exchangecd = #{exchangecd,jdbcType=VARCHAR},
+		calendardate =
+		#{calendardate,jdbcType=DATE},
+		isopen = #{isopen,jdbcType=BIT},
+		prevtradedate = #{prevtradedate,jdbcType=DATE},
+		isweekend =
+		#{isweekend,jdbcType=BIT},
+		ismonthend = #{ismonthend,jdbcType=BIT},
+		isquarterend = #{isquarterend,jdbcType=BIT},
+		isyearend =
+		#{isyearend,jdbcType=BIT}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

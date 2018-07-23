@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujuit.udata.dao.StockPropertyBeanMapper">
+	<resultMap id="BaseResultMap" type="com.ujuit.udata.bean.StockPropertyBean">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="date" property="date" jdbcType="DATE" />
+		<association property="tmb" javaType="com.ujuit.udata.bean.TerminateBean">
+			<id property="id" column="id" jdbcType="INTEGER" />
+			<result column="code" property="code" jdbcType="VARCHAR" />
+			<result column="exchange_basicinfo_id" property="exchangeBasicinfoId"
+				jdbcType="INTEGER" />
+		</association>
+
+	</resultMap>
+	
+		<resultMap id="BaseResultMap2" type="com.ujuit.udata.bean.StockPropertyBean">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="date" property="date" jdbcType="DATE" />
+		<association property="tmb" javaType="com.ujuit.udata.bean.TerminateBean">
+			<id property="id" column="id" jdbcType="INTEGER" />
+			<result column="code" property="code" jdbcType="VARCHAR" />
+			<result column="exchange_basicinfo_id" property="exchangeBasicinfoId"
+				jdbcType="INTEGER" />
+		</association>
+
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, date, stock_basicinfo_id, create_time, property
+	</sql>
+
+	<select id="selectAllTerminated" resultMap="BaseResultMap2"
+		resultType="java.util.List">
+		select A.*,B.* from
+		t_stock_property as A
+		left join t_stock_basicinfo as B on
+		A.stock_basicinfo_id = B.id where
+		A.property ='终止上市';
+		
+
+		
+	</select>
+
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_stock_property
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_stock_property
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.ujuit.udata.bean.StockPropertyBean">
+		insert into t_stock_property
+		(id, date, stock_basicinfo_id,
+		create_time, property)
+		values
+		(#{id,jdbcType=INTEGER}, #{date,jdbcType=DATE},
+		#{stockBasicinfoId,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP}, #{property,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.ujuit.udata.bean.StockPropertyBean">
+		insert into t_stock_property
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="date != null">
+				date,
+			</if>
+			<if test="stockBasicinfoId != null">
+				stock_basicinfo_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="property != null">
+				property,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="date != null">
+				#{date,jdbcType=DATE},
+			</if>
+			<if test="stockBasicinfoId != null">
+				#{stockBasicinfoId,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="property != null">
+				#{property,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ujuit.udata.bean.StockPropertyBean">
+		update t_stock_property
+		<set>
+			<if test="date != null">
+				date = #{date,jdbcType=DATE},
+			</if>
+			<if test="stockBasicinfoId != null">
+				stock_basicinfo_id =
+				#{stockBasicinfoId,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="property != null">
+				property = #{property,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ujuit.udata.bean.StockPropertyBean">
+		update
+		t_stock_property
+		set date = #{date,jdbcType=DATE},
+		stock_basicinfo_id =
+		#{stockBasicinfoId,jdbcType=INTEGER},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		property =
+		#{property,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
